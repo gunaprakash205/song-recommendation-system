@@ -306,16 +306,17 @@ def recommend_songs(song_name, top_n=5):
 
 st.markdown("""
 <div class="hero">
-
     <div class="hero-icon">🎧</div>
 
     <h1>TuneMatch</h1>
 
     <p>
-        Discover your next favorite song with
-        <b>AI-powered recommendations</b>
+        Find your next favorite song
+        <br>
+        <span style="color:#a855f7;">
+            Powered by Machine Learning
+        </span>
     </p>
-
 </div>
 """, unsafe_allow_html=True)
 
@@ -327,15 +328,17 @@ st.markdown("""
 st.markdown("""
 <div class="search-box">
 
-    <h3 style="text-align:center;">
-        🎵 Find a Song You Love
+    <h3 style="text-align:center; font-size:24px;">
+        🎵 What are you listening to?
     </h3>
 
     <p style="
         text-align:center;
         color:#aaa0b5;
+        font-size:14px;
+        margin-bottom:0;
     ">
-        Select a song and discover similar tracks
+        Choose a song and we'll find tracks with a similar vibe.
     </p>
 
 </div>
@@ -402,12 +405,16 @@ if recommend_button:
 
         else:
 
-            st.markdown(
-                f"""
-                <div class="section-title">
-                    🎶 Recommended Songs
-                </div>
+            <div class="section-title">
+    ✨ Your Recommendations
+</div>
 
+<p style="color:#aaa0b5;">
+    Songs similar to
+    <b style="color:white;">
+        {selected_song}
+    </b>
+</p>
                 <p style="color:#aaa0b5;">
 
                     Based on
@@ -479,11 +486,17 @@ if recommend_button:
 st.markdown("""
 <div class="footer">
 
-    🎧 TuneMatch • Music Recommendation System
+    🎧 <b>TuneMatch</b>
+
+    <br>
+
+    <span style="color:#665d70;">
+        Music Recommendation System
+    </span>
 
     <br><br>
 
     Built with Python • Pandas • Scikit-learn • Streamlit
 
 </div>
-""", unsafe_allow_html=True)
+""", unsafe_allow_html=True))
