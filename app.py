@@ -405,16 +405,21 @@ if recommend_button:
 
         else:
 
-            <div class="section-title">
-    ✨ Your Recommendations
-</div>
+            st.markdown(
+    f"""
+    <div class="section-title">
+        ✨ Your Recommendations
+    </div>
 
-<p style="color:#aaa0b5;">
-    Songs similar to
-    <b style="color:white;">
-        {selected_song}
-    </b>
-</p>
+    <p style="color:#aaa0b5;">
+        Songs similar to
+        <b style="color:white;">
+            {selected_song}
+        </b>
+    </p>
+    """,
+    unsafe_allow_html=True
+)
                 <p style="color:#aaa0b5;">
 
                     Based on
