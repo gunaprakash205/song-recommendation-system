@@ -3,7 +3,6 @@ import streamlit as st
 import pandas as pd
 from scipy.sparse import load_npz
 from sklearn.metrics.pairwise import cosine_similarity
-import html
 
 
 # ============================================================
@@ -19,7 +18,7 @@ st.set_page_config(
 
 
 # ============================================================
-# CSS
+# CUSTOM CSS - ONLY STYLING
 # ============================================================
 
 st.markdown("""
@@ -51,246 +50,51 @@ st.markdown("""
             #12001f,
             #06000b
         );
-
-    color: white;
 }
 
 .block-container {
-    max-width: 1050px;
-    padding-top: 1.5rem;
-    padding-bottom: 4rem;
+    max-width: 1000px;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
 }
 
-
-/* ================= HERO ================= */
-
-.hero {
+.hero-box {
     text-align: center;
-    padding: 45px 20px 35px;
-}
-
-.hero-icon {
-    font-size: 65px;
-    margin-bottom: 8px;
+    padding: 40px 20px;
 }
 
 .hero-title {
     font-size: 55px;
     font-weight: 800;
-    line-height: 1.1;
-
-    background: linear-gradient(
-        90deg,
-        #f472b6,
-        #a855f7,
-        #6366f1
-    );
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin: 5px 0;
 }
 
 .hero-subtitle {
     color: #b8aabe;
     font-size: 17px;
-    margin-top: 12px;
-    line-height: 1.7;
 }
 
-.hero-highlight {
-    color: #c084fc;
-    font-weight: 600;
+.search-box {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 25px;
+    margin: 20px 0;
 }
 
-
-/* ================= SEARCH ================= */
-
-.search-container {
-    background: rgba(255, 255, 255, 0.055);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 22px;
-
-    padding: 28px;
-    margin-bottom: 25px;
-
-    box-shadow:
-        0 15px 45px rgba(0, 0, 0, 0.30);
-
-    backdrop-filter: blur(10px);
-}
-
-.search-title {
-    text-align: center;
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.search-description {
-    text-align: center;
-    color: #aaa0b5;
-    font-size: 14px;
-    margin-top: 6px;
-}
-
-
-/* ================= SELECT BOX ================= */
-
-div[data-baseweb="select"] > div {
-    background-color: rgba(255, 255, 255, 0.07);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-div[data-baseweb="select"] span {
-    color: white !important;
-}
-
-
-/* ================= BUTTON ================= */
-
-.stButton > button {
-    background: linear-gradient(
-        90deg,
-        #9333ea,
-        #ec4899
-    );
-
-    color: white;
-    border: none;
-    border-radius: 12px;
-
-    padding: 12px;
-    font-size: 16px;
-    font-weight: 600;
-
-    transition: 0.25s;
-}
-
-.stButton > button:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 8px 25px rgba(168, 85, 247, 0.45);
-}
-
-
-/* ================= RESULTS ================= */
-
-.results-heading {
-    margin-top: 35px;
-    margin-bottom: 20px;
-}
-
-.results-title {
-    font-size: 29px;
-    font-weight: 700;
-}
-
-.results-subtitle {
-    color: #aaa0b5;
-    font-size: 14px;
-    margin-top: 4px;
-}
-
-
-/* ================= SONG CARD ================= */
-
-.song-card {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255, 255, 255, 0.085),
-            rgba(255, 255, 255, 0.025)
-        );
-
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    border-radius: 18px;
-
+.result-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 16px;
     padding: 18px;
-    margin-bottom: 14px;
-
-    transition: 0.25s;
+    margin: 10px 0;
 }
-
-.song-card:hover {
-    transform: translateY(-3px);
-
-    border-color: rgba(168, 85, 247, 0.60);
-
-    box-shadow:
-        0 12px 30px rgba(168, 85, 247, 0.16);
-}
-
-.song-icon {
-    width: 55px;
-    height: 55px;
-    min-width: 55px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 15px;
-
-    background: rgba(168, 85, 247, 0.15);
-
-    font-size: 25px;
-}
-
-.song-details {
-    flex: 1;
-}
-
-.song-rank {
-    color: #c084fc;
-    font-size: 11px;
-    font-weight: 600;
-}
-
-.song-name {
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    margin-top: 2px;
-}
-
-.song-artist {
-    color: #9f94a8;
-    font-size: 13px;
-    margin-top: 3px;
-}
-
-.play-icon {
-    font-size: 22px;
-}
-
-
-/* ================= FOOTER ================= */
 
 .footer {
     text-align: center;
-
-    margin-top: 55px;
-    padding-top: 25px;
-
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-
-    color: #756b80;
-    font-size: 13px;
-}
-
-.footer-title {
-    color: #b9a8c8;
-    font-size: 15px;
-    font-weight: 600;
-}
-
-.footer-highlight {
-    color: #a855f7;
+    margin-top: 50px;
+    padding: 25px;
+    color: #81768b;
 }
 
 </style>
@@ -304,11 +108,11 @@ div[data-baseweb="select"] span {
 @st.cache_resource
 def load_data():
 
-    df = pd.read_csv("songs.csv")
+    songs = pd.read_csv("songs.csv")
 
-    tfidf_matrix = load_npz("tfidf_matrix.npz")
+    matrix = load_npz("tfidf_matrix.npz")
 
-    return df, tfidf_matrix
+    return songs, matrix
 
 
 try:
@@ -318,20 +122,29 @@ try:
 except FileNotFoundError:
 
     st.error(
-        "❌ songs.csv or tfidf_matrix.npz was not found."
+        "❌ Could not find songs.csv or tfidf_matrix.npz."
     )
 
     st.stop()
 
 
 # ============================================================
-# VALIDATE DATA
+# CHECK DATA
 # ============================================================
 
-if "song" not in df.columns or "artist" not in df.columns:
+if "song" not in df.columns:
 
     st.error(
-        "❌ songs.csv must contain 'song' and 'artist' columns."
+        "❌ Your songs.csv file must contain a 'song' column."
+    )
+
+    st.stop()
+
+
+if "artist" not in df.columns:
+
+    st.error(
+        "❌ Your songs.csv file must contain an 'artist' column."
     )
 
     st.stop()
@@ -351,9 +164,9 @@ if len(df) != tfidf_matrix.shape[0]:
 # RECOMMENDATION FUNCTION
 # ============================================================
 
-def recommend_songs(song_name, top_n=5):
+def recommend_songs(song_name, number_of_songs=5):
 
-    song_column = (
+    songs_lower = (
         df["song"]
         .fillna("")
         .astype(str)
@@ -362,83 +175,83 @@ def recommend_songs(song_name, top_n=5):
     )
 
     matches = df[
-        song_column == song_name.strip().lower()
+        songs_lower == song_name.strip().lower()
     ]
 
     if matches.empty:
         return None
 
-    original_index = matches.index[0]
+    selected_index = matches.index[0]
 
-    matrix_index = df.index.get_loc(
-        original_index
-    )
+    matrix_index = df.index.get_loc(selected_index)
 
-    similarity_scores = cosine_similarity(
+    scores = cosine_similarity(
         tfidf_matrix[matrix_index],
         tfidf_matrix
     ).flatten()
 
-    similar_indices = similarity_scores.argsort()[::-1]
+    sorted_indices = scores.argsort()[::-1]
 
-    similar_indices = [
-        i
-        for i in similar_indices
-        if i != matrix_index
+    sorted_indices = [
+        index
+        for index in sorted_indices
+        if index != matrix_index
     ]
 
-    similar_indices = similar_indices[:top_n]
+    sorted_indices = sorted_indices[:number_of_songs]
 
-    recommendations = df.iloc[
-        similar_indices
-    ][["artist", "song"]].copy()
+    result = df.iloc[
+        sorted_indices
+    ][["artist", "song"]]
 
-    return recommendations.reset_index(drop=True)
+    return result.reset_index(drop=True)
 
 
 # ============================================================
 # HERO
 # ============================================================
 
-st.markdown("""
-<div class="hero">
+st.markdown(
+    '<div class="hero-box">',
+    unsafe_allow_html=True
+)
 
-    <div class="hero-icon">🎧</div>
+st.markdown("# 🎧 TuneMatch")
 
-    <div class="hero-title">
-        TuneMatch
-    </div>
+st.markdown(
+    "### Discover music that matches your vibe."
+)
 
-    <div class="hero-subtitle">
-        Discover music that matches your vibe.
-        <br>
-        <span class="hero-highlight">
-            Powered by Machine Learning
-        </span>
-    </div>
+st.caption(
+    "✨ Powered by Machine Learning"
+)
 
-</div>
-""", unsafe_allow_html=True)
+st.markdown(
+    "</div>",
+    unsafe_allow_html=True
+)
 
 
 # ============================================================
-# SEARCH BOX
+# SEARCH SECTION
 # ============================================================
 
-st.markdown("""
-<div class="search-container">
+st.markdown(
+    '<div class="search-box">',
+    unsafe_allow_html=True
+)
 
-    <div class="search-title">
-        🎵 Find Your Next Favorite Song
-    </div>
+st.subheader("🎵 Find Your Next Favorite Song")
 
-    <div class="search-description">
-        Select a song below and TuneMatch will find
-        tracks with a similar musical vibe.
-    </div>
+st.write(
+    "Select a song and TuneMatch will find tracks "
+    "with a similar musical vibe."
+)
 
-</div>
-""", unsafe_allow_html=True)
+st.markdown(
+    "</div>",
+    unsafe_allow_html=True
+)
 
 
 # ============================================================
@@ -465,9 +278,9 @@ selected_song = st.selectbox(
 # BUTTON
 # ============================================================
 
-left, middle, right = st.columns([1, 2, 1])
+col1, col2, col3 = st.columns([1, 2, 1])
 
-with middle:
+with col2:
 
     recommend_button = st.button(
         "✨ Recommend Songs",
@@ -476,7 +289,7 @@ with middle:
 
 
 # ============================================================
-# RECOMMENDATIONS
+# RESULTS
 # ============================================================
 
 if recommend_button:
@@ -491,7 +304,7 @@ if recommend_button:
 
         recommendations = recommend_songs(
             selected_song,
-            top_n=5
+            number_of_songs=5
         )
 
         if recommendations is None:
@@ -502,73 +315,45 @@ if recommend_button:
 
         else:
 
-            safe_selected_song = html.escape(
-                str(selected_song)
+            st.markdown("## ✨ Your Recommendations")
+
+            st.write(
+                f"Songs similar to **{selected_song}**"
             )
 
-            # Results heading
-            st.markdown(
-                f"""
-                <div class="results-heading">
-
-                    <div class="results-title">
-                        ✨ Your Recommendations
-                    </div>
-
-                    <div class="results-subtitle">
-                        Similar songs to
-                        <b style="color:white;">
-                            {safe_selected_song}
-                        </b>
-                    </div>
-
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-
-
-            # Song cards
-            for number, row in recommendations.iterrows():
-
-                safe_song = html.escape(
-                    str(row["song"])
-                )
-
-                safe_artist = html.escape(
-                    str(row["artist"])
-                )
+            for i, row in recommendations.iterrows():
 
                 st.markdown(
-                    f"""
-                    <div class="song-card">
+                    '<div class="result-card">',
+                    unsafe_allow_html=True
+                )
 
-                        <div class="song-icon">
-                            🎵
-                        </div>
+                col_a, col_b, col_c = st.columns(
+                    [0.7, 5, 0.7]
+                )
 
-                        <div class="song-details">
+                with col_a:
 
-                            <div class="song-rank">
-                                RECOMMENDATION #{number + 1}
-                            </div>
+                    st.markdown(
+                        f"### 🎵"
+                    )
 
-                            <div class="song-name">
-                                {safe_song}
-                            </div>
+                with col_b:
 
-                            <div class="song-artist">
-                                🎤 {safe_artist}
-                            </div>
+                    st.markdown(
+                        f"**#{i + 1} — {row['song']}**"
+                    )
 
-                        </div>
+                    st.caption(
+                        f"🎤 {row['artist']}"
+                    )
 
-                        <div class="play-icon">
-                            ▶️
-                        </div>
+                with col_c:
 
-                    </div>
-                    """,
+                    st.markdown("▶️")
+
+                st.markdown(
+                    "</div>",
                     unsafe_allow_html=True
                 )
 
@@ -577,30 +362,16 @@ if recommend_button:
 # FOOTER
 # ============================================================
 
-st.markdown("""
-<div class="footer">
+st.markdown("---")
 
-    <div class="footer-title">
-        🎧 TuneMatch
-    </div>
+st.markdown(
+    "🎧 **TuneMatch**"
+)
 
-    <div>
-        Music Recommendation System
-    </div>
+st.caption(
+    "Music Recommendation System"
+)
 
-    <br>
-
-    <div>
-        Built with
-        <span class="footer-highlight">Python</span>
-        •
-        <span class="footer-highlight">Pandas</span>
-        •
-        <span class="footer-highlight">Scikit-learn</span>
-        •
-        <span class="footer-highlight">Streamlit</span>
-    </div>
-
-</div>
-""", unsafe_allow_html=True)
-
+st.caption(
+    "Built with Python • Pandas • Scikit-learn • Streamlit"
+)
