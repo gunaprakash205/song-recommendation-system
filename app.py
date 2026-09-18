@@ -12,83 +12,76 @@ import html
 
 st.set_page_config(
     page_title="TuneMatch",
-    page_icon="🎵",
+    page_icon="🎧",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
 
 # ============================================================
-# CUSTOM CSS
+# CSS
 # ============================================================
 
 st.markdown("""
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url(
+    'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap'
+);
 
-html, body, [class*="css"] {
+* {
     font-family: 'Poppins', sans-serif;
 }
 
 .stApp {
     background:
         radial-gradient(
-            circle at 15% 15%,
-            rgba(168, 85, 247, 0.22),
-            transparent 28%
+            circle at 10% 10%,
+            rgba(168, 85, 247, 0.20),
+            transparent 30%
         ),
         radial-gradient(
-            circle at 85% 25%,
-            rgba(236, 72, 153, 0.18),
+            circle at 90% 20%,
+            rgba(236, 72, 153, 0.16),
             transparent 30%
         ),
         linear-gradient(
             135deg,
-            #07000d 0%,
-            #12001f 50%,
-            #050008 100%
+            #08000f,
+            #12001f,
+            #06000b
         );
 
     color: white;
 }
 
-
-/* MAIN CONTAINER */
-
 .block-container {
-    max-width: 1100px;
-    padding-top: 2rem;
+    max-width: 1050px;
+    padding-top: 1.5rem;
     padding-bottom: 4rem;
 }
 
 
-/* ============================================================
-   HERO
-   ============================================================ */
+/* ================= HERO ================= */
 
-.hero-container {
+.hero {
     text-align: center;
     padding: 45px 20px 35px;
 }
 
 .hero-icon {
-    font-size: 70px;
-    margin-bottom: 5px;
-    filter: drop-shadow(
-        0 0 20px rgba(168, 85, 247, 0.7)
-    );
+    font-size: 65px;
+    margin-bottom: 8px;
 }
 
 .hero-title {
-    font-size: 56px;
+    font-size: 55px;
     font-weight: 800;
-    letter-spacing: -2px;
-    margin: 0;
+    line-height: 1.1;
 
     background: linear-gradient(
         90deg,
-        #ff4ecd,
+        #f472b6,
         #a855f7,
         #6366f1
     );
@@ -98,9 +91,10 @@ html, body, [class*="css"] {
 }
 
 .hero-subtitle {
-    font-size: 18px;
-    color: #b7aabd;
+    color: #b8aabe;
+    font-size: 17px;
     margin-top: 12px;
+    line-height: 1.7;
 }
 
 .hero-highlight {
@@ -109,49 +103,42 @@ html, body, [class*="css"] {
 }
 
 
-/* ============================================================
-   SEARCH PANEL
-   ============================================================ */
+/* ================= SEARCH ================= */
 
-.search-panel {
+.search-container {
     background: rgba(255, 255, 255, 0.055);
     border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 22px;
 
-    border-radius: 24px;
-
-    padding: 30px;
-
-    margin: 10px auto 25px;
+    padding: 28px;
+    margin-bottom: 25px;
 
     box-shadow:
-        0 15px 50px rgba(0, 0, 0, 0.35);
+        0 15px 45px rgba(0, 0, 0, 0.30);
 
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(10px);
 }
 
 .search-title {
     text-align: center;
-    font-size: 25px;
+    font-size: 24px;
     font-weight: 700;
-    margin-bottom: 8px;
 }
 
 .search-description {
     text-align: center;
     color: #aaa0b5;
     font-size: 14px;
-    margin-bottom: 20px;
+    margin-top: 6px;
 }
 
 
-/* ============================================================
-   STREAMLIT SELECTBOX
-   ============================================================ */
+/* ================= SELECT BOX ================= */
 
 div[data-baseweb="select"] > div {
-    background-color: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
+    background-color: rgba(255, 255, 255, 0.07);
     border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 div[data-baseweb="select"] span {
@@ -159,14 +146,9 @@ div[data-baseweb="select"] span {
 }
 
 
-/* ============================================================
-   BUTTON
-   ============================================================ */
+/* ================= BUTTON ================= */
 
 .stButton > button {
-
-    width: 100%;
-
     background: linear-gradient(
         90deg,
         #9333ea,
@@ -174,129 +156,106 @@ div[data-baseweb="select"] span {
     );
 
     color: white;
-
     border: none;
+    border-radius: 12px;
 
-    border-radius: 13px;
-
-    padding: 13px 20px;
-
+    padding: 12px;
     font-size: 16px;
-
     font-weight: 600;
 
-    transition: all 0.25s ease;
+    transition: 0.25s;
 }
 
 .stButton > button:hover {
-
-    transform: translateY(-3px);
+    transform: translateY(-2px);
 
     box-shadow:
-        0 10px 30px rgba(168, 85, 247, 0.45);
+        0 8px 25px rgba(168, 85, 247, 0.45);
 }
 
 
-/* ============================================================
-   RESULT HEADER
-   ============================================================ */
+/* ================= RESULTS ================= */
 
-.results-header {
+.results-heading {
     margin-top: 35px;
     margin-bottom: 20px;
 }
 
 .results-title {
-    font-size: 30px;
+    font-size: 29px;
     font-weight: 700;
 }
 
-.results-description {
+.results-subtitle {
     color: #aaa0b5;
     font-size: 14px;
+    margin-top: 4px;
 }
 
 
-/* ============================================================
-   SONG CARD
-   ============================================================ */
+/* ================= SONG CARD ================= */
 
 .song-card {
-
     display: flex;
-
     align-items: center;
-
     gap: 18px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(255,255,255,0.09),
-            rgba(255,255,255,0.025)
+            rgba(255, 255, 255, 0.085),
+            rgba(255, 255, 255, 0.025)
         );
 
-    border: 1px solid rgba(255,255,255,0.10);
-
+    border: 1px solid rgba(255, 255, 255, 0.10);
     border-radius: 18px;
 
-    padding: 18px 20px;
-
+    padding: 18px;
     margin-bottom: 14px;
 
-    transition:
-        transform 0.25s ease,
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
+    transition: 0.25s;
 }
 
 .song-card:hover {
+    transform: translateY(-3px);
 
-    transform: translateY(-4px);
-
-    border-color: rgba(168,85,247,0.65);
+    border-color: rgba(168, 85, 247, 0.60);
 
     box-shadow:
-        0 12px 35px rgba(168,85,247,0.18);
+        0 12px 30px rgba(168, 85, 247, 0.16);
 }
 
 .song-icon {
-
     width: 55px;
     height: 55px;
+    min-width: 55px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     border-radius: 15px;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(168,85,247,0.25),
-            rgba(236,72,153,0.20)
-        );
+    background: rgba(168, 85, 247, 0.15);
 
-    font-size: 26px;
+    font-size: 25px;
 }
 
-.song-info {
+.song-details {
     flex: 1;
 }
 
 .song-rank {
     color: #c084fc;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    margin-bottom: 3px;
 }
 
 .song-name {
     color: white;
-    font-size: 19px;
+    font-size: 18px;
     font-weight: 600;
+    margin-top: 2px;
 }
 
 .song-artist {
@@ -306,47 +265,21 @@ div[data-baseweb="select"] span {
 }
 
 .play-icon {
-    font-size: 23px;
-    opacity: 0.85;
+    font-size: 22px;
 }
 
 
-/* ============================================================
-   EMPTY / INFO BOX
-   ============================================================ */
-
-.info-box {
-
-    text-align: center;
-
-    padding: 30px;
-
-    border-radius: 18px;
-
-    background: rgba(255,255,255,0.04);
-
-    border: 1px solid rgba(255,255,255,0.08);
-
-    color: #aaa0b5;
-}
-
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
+/* ================= FOOTER ================= */
 
 .footer {
-
     text-align: center;
 
     margin-top: 55px;
-
     padding-top: 25px;
 
-    border-top: 1px solid rgba(255,255,255,0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 
     color: #756b80;
-
     font-size: 13px;
 }
 
@@ -359,7 +292,6 @@ div[data-baseweb="select"] span {
 .footer-highlight {
     color: #a855f7;
 }
-
 
 </style>
 """, unsafe_allow_html=True)
@@ -379,10 +311,6 @@ def load_data():
     return df, tfidf_matrix
 
 
-# ============================================================
-# LOAD DATA SAFELY
-# ============================================================
-
 try:
 
     df, tfidf_matrix = load_data()
@@ -390,25 +318,20 @@ try:
 except FileNotFoundError:
 
     st.error(
-        "❌ Required files were not found. "
-        "Make sure songs.csv and tfidf_matrix.npz "
-        "are in the same folder as app.py."
+        "❌ songs.csv or tfidf_matrix.npz was not found."
     )
 
     st.stop()
 
 
 # ============================================================
-# CHECK DATA
+# VALIDATE DATA
 # ============================================================
 
-required_columns = {"artist", "song"}
-
-if not required_columns.issubset(df.columns):
+if "song" not in df.columns or "artist" not in df.columns:
 
     st.error(
-        "❌ songs.csv must contain these columns: "
-        "artist and song"
+        "❌ songs.csv must contain 'song' and 'artist' columns."
     )
 
     st.stop()
@@ -417,8 +340,8 @@ if not required_columns.issubset(df.columns):
 if len(df) != tfidf_matrix.shape[0]:
 
     st.error(
-        "❌ The number of songs in songs.csv does not "
-        "match the number of rows in tfidf_matrix.npz."
+        "❌ songs.csv and tfidf_matrix.npz have different "
+        "numbers of rows."
     )
 
     st.stop()
@@ -430,7 +353,7 @@ if len(df) != tfidf_matrix.shape[0]:
 
 def recommend_songs(song_name, top_n=5):
 
-    song_values = (
+    song_column = (
         df["song"]
         .fillna("")
         .astype(str)
@@ -439,39 +362,35 @@ def recommend_songs(song_name, top_n=5):
     )
 
     matches = df[
-        song_values == song_name.strip().lower()
+        song_column == song_name.strip().lower()
     ]
 
     if matches.empty:
         return None
 
-    # Original dataframe index
-    idx = matches.index[0]
+    original_index = matches.index[0]
 
-    # Position inside TF-IDF matrix
-    matrix_position = df.index.get_loc(idx)
+    matrix_index = df.index.get_loc(
+        original_index
+    )
 
-    # Calculate similarity
     similarity_scores = cosine_similarity(
-        tfidf_matrix[matrix_position],
+        tfidf_matrix[matrix_index],
         tfidf_matrix
     ).flatten()
 
-    # Sort from highest similarity
-    similar_positions = similarity_scores.argsort()[::-1]
+    similar_indices = similarity_scores.argsort()[::-1]
 
-    # Remove selected song
-    similar_positions = [
-        position
-        for position in similar_positions
-        if position != matrix_position
+    similar_indices = [
+        i
+        for i in similar_indices
+        if i != matrix_index
     ]
 
-    # Take top N
-    similar_positions = similar_positions[:top_n]
+    similar_indices = similar_indices[:top_n]
 
     recommendations = df.iloc[
-        similar_positions
+        similar_indices
     ][["artist", "song"]].copy()
 
     return recommendations.reset_index(drop=True)
@@ -482,11 +401,9 @@ def recommend_songs(song_name, top_n=5):
 # ============================================================
 
 st.markdown("""
-<div class="hero-container">
+<div class="hero">
 
-    <div class="hero-icon">
-        🎧
-    </div>
+    <div class="hero-icon">🎧</div>
 
     <div class="hero-title">
         TuneMatch
@@ -505,18 +422,18 @@ st.markdown("""
 
 
 # ============================================================
-# SEARCH PANEL
+# SEARCH BOX
 # ============================================================
 
 st.markdown("""
-<div class="search-panel">
+<div class="search-container">
 
     <div class="search-title">
         🎵 Find Your Next Favorite Song
     </div>
 
     <div class="search-description">
-        Select a song below and TuneMatch will recommend
+        Select a song below and TuneMatch will find
         tracks with a similar musical vibe.
     </div>
 
@@ -525,7 +442,7 @@ st.markdown("""
 
 
 # ============================================================
-# SONG LIST
+# SONG SELECTION
 # ============================================================
 
 song_list = sorted(
@@ -536,33 +453,30 @@ song_list = sorted(
     .unique()
 )
 
-
 selected_song = st.selectbox(
-    "Select a song",
+    "Choose a song",
     song_list,
     index=None,
-    placeholder="🔎 Search or select a song..."
+    placeholder="🔎 Search for a song..."
 )
 
 
 # ============================================================
-# RECOMMEND BUTTON
+# BUTTON
 # ============================================================
 
-button_col1, button_col2, button_col3 = st.columns(
-    [1, 2, 1]
-)
+left, middle, right = st.columns([1, 2, 1])
 
-with button_col2:
+with middle:
 
     recommend_button = st.button(
-        "✨ Find Similar Songs",
+        "✨ Recommend Songs",
         use_container_width=True
     )
 
 
 # ============================================================
-# RESULTS
+# RECOMMENDATIONS
 # ============================================================
 
 if recommend_button:
@@ -570,7 +484,7 @@ if recommend_button:
     if selected_song is None:
 
         st.warning(
-            "🎵 Please select a song before getting recommendations."
+            "🎵 Please select a song first."
         )
 
     else:
@@ -583,37 +497,28 @@ if recommend_button:
         if recommendations is None:
 
             st.error(
-                "❌ The selected song could not be found."
-            )
-
-        elif recommendations.empty:
-
-            st.info(
-                "No similar songs were found."
+                "❌ Song not found."
             )
 
         else:
 
-            safe_song = html.escape(
+            safe_selected_song = html.escape(
                 str(selected_song)
             )
 
-            # ------------------------------------------------
-            # RESULTS HEADER
-            # ------------------------------------------------
-
+            # Results heading
             st.markdown(
                 f"""
-                <div class="results-header">
+                <div class="results-heading">
 
                     <div class="results-title">
-                        ✨ Recommended For You
+                        ✨ Your Recommendations
                     </div>
 
-                    <div class="results-description">
-                        Similar songs based on
+                    <div class="results-subtitle">
+                        Similar songs to
                         <b style="color:white;">
-                            {safe_song}
+                            {safe_selected_song}
                         </b>
                     </div>
 
@@ -623,13 +528,10 @@ if recommend_button:
             )
 
 
-            # ------------------------------------------------
-            # SONG CARDS
-            # ------------------------------------------------
+            # Song cards
+            for number, row in recommendations.iterrows():
 
-            for i, row in recommendations.iterrows():
-
-                safe_song_name = html.escape(
+                safe_song = html.escape(
                     str(row["song"])
                 )
 
@@ -645,14 +547,14 @@ if recommend_button:
                             🎵
                         </div>
 
-                        <div class="song-info">
+                        <div class="song-details">
 
                             <div class="song-rank">
-                                RECOMMENDATION #{i + 1}
+                                RECOMMENDATION #{number + 1}
                             </div>
 
                             <div class="song-name">
-                                {safe_song_name}
+                                {safe_song}
                             </div>
 
                             <div class="song-artist">
