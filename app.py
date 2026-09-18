@@ -95,9 +95,9 @@ st.markdown("""
 /* SEARCH BOX */
 
 .search-box {
-    background: rgba(255,255,255,0.06);
+    background: rgba(255, 255, 255, 0.06);
 
-    border: 1px solid rgba(255,255,255,0.12);
+    border: 1px solid rgba(255, 255, 255, 0.12);
 
     border-radius: 22px;
 
@@ -108,7 +108,7 @@ st.markdown("""
     max-width: 900px;
 
     box-shadow:
-        0 10px 40px rgba(0,0,0,0.25);
+        0 10px 40px rgba(0, 0, 0, 0.25);
 }
 
 
@@ -140,7 +140,7 @@ st.markdown("""
     transform: translateY(-2px);
 
     box-shadow:
-        0 8px 25px rgba(168,85,247,0.4);
+        0 8px 25px rgba(168, 85, 247, 0.4);
 }
 
 
@@ -150,11 +150,11 @@ st.markdown("""
 
     background: linear-gradient(
         145deg,
-        rgba(255,255,255,0.08),
-        rgba(255,255,255,0.025)
+        rgba(255, 255, 255, 0.08),
+        rgba(255, 255, 255, 0.025)
     );
 
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 
     border-radius: 18px;
 
@@ -165,17 +165,17 @@ st.markdown("""
     transition: all 0.25s ease;
 
     box-shadow:
-        0 8px 25px rgba(0,0,0,0.2);
+        0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .card:hover {
 
     transform: translateY(-4px);
 
-    border-color: rgba(168,85,247,0.6);
+    border-color: rgba(168, 85, 247, 0.6);
 
     box-shadow:
-        0 12px 35px rgba(168,85,247,0.18);
+        0 12px 35px rgba(168, 85, 247, 0.18);
 }
 
 .song-number {
@@ -267,7 +267,7 @@ def recommend_songs(song_name, top_n=5):
 
     # Find exact song
     matches = df[
-        df["song"].str.lower() == song_name.lower()
+        df["song"].astype(str).str.lower() == song_name.lower()
     ]
 
     if len(matches) == 0:
@@ -276,7 +276,7 @@ def recommend_songs(song_name, top_n=5):
     # Get index
     idx = matches.index[0]
 
-    # Calculate similarity only for selected song
+    # Calculate similarity
     similarity_scores = cosine_similarity(
         tfidf_matrix[idx],
         tfidf_matrix
@@ -293,6 +293,7 @@ def recommend_songs(song_name, top_n=5):
     # Select top N
     similar_indices = similar_indices[:top_n]
 
+    # Get recommendations
     recommendations = df[
         ["artist", "song"]
     ].iloc[similar_indices].copy()
@@ -306,9 +307,14 @@ def recommend_songs(song_name, top_n=5):
 
 st.markdown("""
 <div class="hero">
-    <div class="hero-icon">🎧</div>
 
-    <h1>TuneMatch</h1>
+    <div class="hero-icon">
+        🎧
+    </div>
+
+    <h1>
+        TuneMatch
+    </h1>
 
     <p>
         Find your next favorite song
@@ -317,6 +323,7 @@ st.markdown("""
             Powered by Machine Learning
         </span>
     </p>
+
 </div>
 """, unsafe_allow_html=True)
 
@@ -352,9 +359,9 @@ st.markdown("""
 song_list = sorted(
     df["song"]
     .dropna()
+    .astype(str)
     .unique()
 )
-
 
 selected_song = st.selectbox(
     "Choose a song",
@@ -405,38 +412,29 @@ if recommend_button:
 
         else:
 
+            # ------------------------------------------------
+            # RESULTS HEADER
+            # ------------------------------------------------
+
             st.markdown(
-    f"""
-    <div class="section-title">
-        ✨ Your Recommendations
-    </div>
+                f"""
+                <div class="section-title">
+                    ✨ Your Recommendations
+                </div>
 
-    <p style="color:#aaa0b5;">
-        Songs similar to
-        <b style="color:white;">
-            {selected_song}
-        </b>
-    </p>
-    """,
-    unsafe_allow_html=True
-)
                 <p style="color:#aaa0b5;">
-
-                    Based on
-
+                    Songs similar to
                     <b style="color:white;">
                         {selected_song}
                     </b>
-
                 </p>
                 """,
                 unsafe_allow_html=True
             )
 
-
-            # ==================================================
+            # ------------------------------------------------
             # RECOMMENDATION CARDS
-            # ==================================================
+            # ------------------------------------------------
 
             for i, row in recommendations.iterrows():
 
@@ -504,4 +502,4 @@ st.markdown("""
     Built with Python • Pandas • Scikit-learn • Streamlit
 
 </div>
-""", unsafe_allow_html=True))
+""", unsafe_allow_html=True)
